@@ -222,3 +222,237 @@ h2 {
 }
 
 
+/* =========================================================
+   SOFT DYSTOPIA THEME
+   This section changes the overall mood of the website
+   without changing the structure we already built.
+   ========================================================= */
+
+
+/* =========================================================
+   MAIN WEBSITE COLOURS
+   Soft pink / cream background with dark readable text
+   ========================================================= */
+
+body {
+  background: linear-gradient(
+    180deg,
+    #fff9fc 0%,
+    #fdf1f6 55%,
+    #fffafc 100%
+  );
+
+  color: #332b30;
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   MAIN AUTHOR TITLE
+   ========================================================= */
+
+h1 {
+  color: #282126;
+  letter-spacing: 0.18em;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   About the Author / Books / Chapters
+   ========================================================= */
+
+h2 {
+  color: #694f5c;
+  letter-spacing: 0.07em;
+}
+
+
+/* =========================================================
+   ABOUT THE AUTHOR BOX
+   Gives the biography a soft white card
+   ========================================================= */
+
+.about-section {
+  background-color: rgba(255, 255, 255, 0.65);
+
+  border: 1px solid #ead5df;
+
+  border-radius: 24px;
+
+  padding: 35px;
+
+  box-shadow: 0 12px 35px rgba(80, 45, 62, 0.06);
+}
+
+
+/* =========================================================
+   BOOK COVER DESIGN
+   Applies to placeholder covers AND later real cover areas
+   ========================================================= */
+
+.book-cover-placeholder {
+  background: linear-gradient(
+    145deg,
+    #fffafd,
+    #f2dfe8
+  );
+
+  border: 1px solid #d8bac9;
+
+  border-radius: 18px;
+
+  color: #765d69;
+
+  box-shadow: 0 12px 30px rgba(73, 45, 59, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+
+/* =========================================================
+   CLICKABLE BOOK COVER
+   Removes the default blue-link appearance
+   ========================================================= */
+
+.book > a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   BOOK COVER HOVER EFFECT
+   Cover subtly lifts when someone hovers over it
+   ========================================================= */
+
+.book > a:hover .book-cover-placeholder {
+  transform: translateY(-7px);
+
+  border-color: #b98ca2;
+
+  box-shadow: 0 18px 38px rgba(73, 45, 59, 0.14);
+}
+
+
+/* =========================================================
+   BOOK TITLE LINKS
+   Replaces bright blue browser links
+   ========================================================= */
+
+.book h3 a {
+  color: #3d3037;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.book h3 a:hover {
+  color: #9a5d7b;
+}
+
+
+/* =========================================================
+   IMPORTANT BUTTONS
+   Styles Back to Home and Purchase links as buttons
+   ========================================================= */
+
+main > p > a,
+.book-page-details a {
+  display: inline-block;
+
+  background-color: #3b2d34;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  padding: 11px 20px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  letter-spacing: 0.08em;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+
+/* =========================================================
+   BUTTON HOVER EFFECT
+   ========================================================= */
+
+main > p > a:hover,
+.book-page-details a:hover {
+  background-color: #8d5670;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   CHAPTER LINKS
+   These stay more subtle instead of becoming large buttons
+   ========================================================= */
+
+.chapter-section a {
+  color: #744b60;
+
+  text-decoration: none;
+
+  border-bottom: 1px solid #d6afc1;
+
+  padding-bottom: 2px;
+}
+
+.chapter-section a:hover {
+  color: #a85f82;
+
+  border-bottom-color: #a85f82;
+}
+
+
+/* =========================================================
+   SMALL INSTITUTIONAL LABELS
+   Used for things like:
+   PUBLIC ACCESS // AUTHOR ARCHIVE
+   ========================================================= */
+
+.system-label {
+  text-align: center;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.18em;
+
+  color: #aa8094;
+
+  text-transform: uppercase;
+
+  margin-bottom: 15px;
+}
+
+
+/* =========================================================
+   TEXT SELECTION
+   Even highlighting text follows the website colours
+   ========================================================= */
+
+::selection {
+  background-color: #e8bfd2;
+
+  color: #2b2227;
+}
+
+
+
