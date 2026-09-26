@@ -1,0 +1,142 @@
+/* =========================================================
+   ENTIRE WEBSITE
+   General colours, font, spacing
+   ========================================================= */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f0ea;
+  color: #1f1f1f;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+
+/* =========================================================
+   MAIN PAGE CONTAINER
+   Keeps everything centred and stops text stretching too wide
+   ========================================================= */
+
+main {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+
+/* =========================================================
+   AUTHOR NAME / MAIN TITLE
+   ========================================================= */
+
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 50px;
+}
+
+
+/* =========================================================
+   SECTION TITLES
+   Example: "About the Author" and "Books"
+   ========================================================= */
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   ABOUT THE AUTHOR SECTION
+   ========================================================= */
+
+.about-section {
+  max-width: 700px;
+  margin: 0 auto 80px auto;
+  text-align: center;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   BOOKS SECTION
+   ========================================================= */
+
+.books-section {
+  margin-top: 50px;
+}
+
+
+/* =========================================================
+   BOOK GRID
+   Controls how the three books sit beside each other
+   ========================================================= */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+}
+
+
+/* =========================================================
+   INDIVIDUAL BOOK
+   ========================================================= */
+
+.book {
+  text-align: center;
+}
+
+
+/* =========================================================
+   BOOK COVER PLACEHOLDER
+   This will later be replaced by your actual book cover image
+   ========================================================= */
+
+.book-cover-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border: 1px solid #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ded8cf;
+  color: #555;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================================================
+   BOOK TITLE
+   ========================================================= */
+
+.book h3 {
+  margin-top: 20px;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
+
+/* =========================================================
+   MOBILE PHONE LAYOUT
+   Makes books stack vertically on smaller screens
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .book-grid {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+}
