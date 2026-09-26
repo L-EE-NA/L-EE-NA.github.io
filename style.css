@@ -140,3 +140,85 @@ h2 {
     font-size: 2.5rem;
   }
 }
+
+/* =========================================================
+   INDIVIDUAL BOOK PAGE LAYOUT
+   Puts the cover on the left and the book information
+   on the right.
+   ========================================================= */
+
+.book-page {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 60px;
+  align-items: start;
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+
+
+/* =========================================================
+   BOOK PAGE COVER
+   Controls the size of the cover on individual book pages.
+   Away from homepage, that second one you click on.
+   ========================================================= */
+
+.book-page-cover {
+  width: 320px;
+}
+
+
+/* =========================================================
+   BOOK PAGE DETAILS
+   Title, blurb and purchase link.
+   ========================================================= */
+
+.book-page-details h1 {
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.book-page-details {
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   CHAPTER SECTION
+   ========================================================= */
+
+.chapter-section {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.chapter-section p {
+  margin: 15px 0;
+}
+
+
+/* =========================================================
+   MOBILE BOOK PAGE
+   Stacks the cover and blurb on smaller screens.
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .book-page {
+    grid-template-columns: 1fr;
+  }
+
+  .book-page-cover {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .book-page-details h1 {
+    text-align: center;
+  }
+}
+
+
