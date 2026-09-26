@@ -455,4 +455,56 @@ main > p > a:hover,
 }
 
 
+/* =========================================================
+   ALTERS THE VISUAL FOR ACCESS TO BOOK 2 AND 3
+   COMING SOON BOOKS
+   Adds an institutional overlay to unreleased books.
+   ========================================================= */
+
+.book.coming-soon > a {
+  position: relative;
+}
+
+
+/* =========================================================
+   ACCESS PENDING OVERLAY
+   ========================================================= */
+
+.book.coming-soon > a::after {
+  content: "ACCESS PENDING\A COMING SOON";
+
+  white-space: pre;
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 75%;
+
+  background-color: rgba(255, 250, 252, 0.92);
+
+  border: 1px solid #cda9ba;
+
+  padding: 15px 10px;
+
+  color: #654a57;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.14em;
+
+  line-height: 1.7;
+
+  text-align: center;
+
+  border-radius: 8px;
+}
+
+
+
 
