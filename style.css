@@ -523,63 +523,109 @@ main > p > a:hover,
 }
 
 
+
 /* =========================================================
    ABOUT THE AUTHOR
-   Wide rectangular panel matching the book-placeholder theme
+   Open layout - no box or background.
    ========================================================= */
 
 .about-section {
   width: 88%;
   max-width: 1000px;
 
-  margin: 35px auto 65px auto;
+  margin: 35px auto 45px auto;
 
-  padding: 28px 38px;
-
-  background: linear-gradient(
-    145deg,
-    #fffafd,
-    #f2dfe8
-  );
-
-  border: 1px solid #d8bac9;
-
-  border-radius: 12px;
-
-  box-shadow: 0 8px 24px rgba(73, 45, 59, 0.05);
+  padding: 0;
 
   text-align: center;
+
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 
 /* =========================================================
-   ABOUT TITLE
+   ABOUT THE AUTHOR TITLE
    ========================================================= */
 
 .about-section h2 {
-  margin: 0 0 22px 0;
+  margin: 0 0 28px 0;
 
-  font-size: 1.8rem;
+  font-size: 2rem;
+
+  color: #694f5c;
 }
 
 
 /* =========================================================
-   ABOUT TEXT
+   ABOUT THE AUTHOR TEXT
+   Keeps the writing centred and comfortably contained.
    ========================================================= */
 
 .about-section p {
   max-width: 900px;
 
-  margin: 0 auto 12px auto;
+  margin: 0 auto 14px auto;
 
-  line-height: 1.55;
+  text-align: center;
 
-  font-size: 0.95rem;
+  font-size: 0.96rem;
+
+  line-height: 1.65;
 }
 
 
-/* Remove extra gap after final paragraph */
-
 .about-section p:last-child {
   margin-bottom: 0;
+}
+
+
+/* =========================================================
+   AUTHOR / BOOKS DIVIDER
+   Dusty pink gradient that fades at both ends.
+   ========================================================= */
+
+.section-divider {
+  position: relative;
+
+  width: 65%;
+  max-width: 800px;
+
+  height: 2px;
+
+  margin: 45px auto 55px auto;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #d8a5bb 20%,
+    #9f657e 50%,
+    #d8a5bb 80%,
+    transparent 100%
+  );
+}
+
+
+/* =========================================================
+   SMALL DIAMOND IN THE CENTRE OF THE DIVIDER
+   ========================================================= */
+
+.section-divider::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 9px;
+  height: 9px;
+
+  background-color: #9f657e;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
 }
