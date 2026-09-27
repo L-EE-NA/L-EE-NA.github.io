@@ -688,3 +688,144 @@ main > p > a:hover,
 
   line-height: 1;
 }
+
+
+/* =========================================================
+   CHAPTER READING PAGE
+   Main container for individual book chapters.
+   ========================================================= */
+
+.chapter-page {
+  width: 90%;
+  max-width: 820px;
+
+  margin: 0 auto;
+
+  padding: 50px 20px 80px 20px;
+}
+
+
+/* =========================================================
+   CHAPTER HEADER
+   Book title + chapter number at the top.
+   ========================================================= */
+
+.chapter-header {
+  text-align: center;
+
+  margin: 60px auto 55px auto;
+}
+
+
+/* Small book title above the chapter number */
+
+.chapter-book-title {
+  margin: 0 0 12px 0;
+
+  font-size: 0.9rem;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+
+  color: #9f657e;
+}
+
+
+/* Main chapter heading */
+
+.chapter-header h1 {
+  margin: 0;
+
+  font-size: 3rem;
+
+  color: #3f2d36;
+}
+
+
+/* =========================================================
+   CHAPTER TEXT
+   The actual novel text.
+   ========================================================= */
+
+.chapter-text {
+  max-width: 720px;
+
+  margin: 0 auto;
+
+  font-size: 1.08rem;
+
+  line-height: 1.9;
+
+  text-align: left;
+
+  color: #2f252a;
+}
+
+
+/* Space between paragraphs */
+
+.chapter-text p {
+  margin: 0 0 1.35em 0;
+}
+
+
+/* =========================================================
+   END OF CHAPTER SYMBOL
+   ========================================================= */
+
+.chapter-end {
+  margin: 60px auto;
+
+  text-align: center;
+
+  font-size: 1rem;
+
+  color: #a56b84;
+}
+
+
+/* =========================================================
+   CHAPTER NAVIGATION
+   Bottom return button.
+   ========================================================= */
+
+.chapter-navigation {
+  text-align: center;
+
+  margin-top: 40px;
+}
+
+
+/* =========================================================
+   MOBILE CHAPTER LAYOUT
+   Makes reading comfortable on phones.
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .chapter-page {
+    width: 92%;
+
+    padding: 30px 8px 60px 8px;
+  }
+
+  .chapter-header {
+    margin: 45px auto 40px auto;
+  }
+
+  .chapter-header h1 {
+    font-size: 2.4rem;
+  }
+
+  .chapter-book-title {
+    font-size: 0.8rem;
+  }
+
+  .chapter-text {
+    font-size: 1.05rem;
+
+    line-height: 1.85;
+  }
+
+}
