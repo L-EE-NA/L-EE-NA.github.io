@@ -635,22 +635,21 @@ main > p > a:hover,
 
 /* =========================================================
    BOOK THREE - COMPLETELY FREE NOTE
-   Handwritten annotation above the third book.
    ========================================================= */
 
 .free-note {
   position: absolute;
 
-  top: -62px;
+  top: -42px;
   left: 50%;
 
-  transform: translateX(-50%) rotate(-4deg);
+  transform: translateX(-50%) rotate(-3deg);
 
   z-index: 10;
 
-  font-family: "Caveat", cursive;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
 
-  font-size: 2.1rem;
+  font-size: 1.5rem;
   font-weight: 600;
 
   color: #9f657e;
@@ -664,28 +663,17 @@ main > p > a:hover,
 
 
 /* =========================================================
-   HANDWRITTEN ARROWS
+   CURVED ARROW
    ========================================================= */
 
 .free-arrows {
-  margin-top: 4px;
+  margin-top: 2px;
 
-  font-family: "Caveat", cursive;
+  font-family: "Segoe Print", "Bradley Hand", cursive;
 
-  font-size: 1.4rem;
+  font-size: 1.7rem;
 
   color: #b27691;
 
-  letter-spacing: 0.12em;
-}
-
-
-/* =========================================================
-   POSITIONING FOR BOOK THREE
-   Tells the handwritten note to position itself relative
-   to the third book only.
-   ========================================================= */
-
-.book:nth-child(3) {
-  position: relative;
+  line-height: 1;
 }
