@@ -522,55 +522,61 @@ main > p > a:hover,
   border-radius: inherit;
 }
 
+
 /* =========================================================
-   ABOUT THE AUTHOR CARD, a and b
-   Creates the centred fancy box on the homepage.
+   ABOUT THE AUTHOR - FINAL CARD DESIGN
+   Wider, flatter and uses the same soft gradient as
+   the book-cover placeholders.
    ========================================================= */
 
 .about-section {
-  max-width: 760px;
+  max-width: 900px;
 
-  margin: 40px auto 90px auto;
+  margin: 30px auto 60px auto;
 
-  padding: 45px 55px;
+  padding: 28px 45px;
 
   text-align: center;
 
-  line-height: 1.8;
+  line-height: 1.6;
 
-  background: rgba(255, 255, 255, 0.58);
+  /* Same colour family as the empty book covers */
+  background: linear-gradient(
+    145deg,
+    #fffafd,
+    #f2dfe8
+  );
 
-  border: 1px solid #dfbdcd;
+  border: 1px solid #d8bac9;
 
-  border-radius: 24px;
+  border-radius: 18px;
 
-  box-shadow: 0 14px 35px rgba(73, 45, 59, 0.08);
+  box-shadow: 0 10px 25px rgba(73, 45, 59, 0.06);
 }
 
 
 /* =========================================================
-   ABOUT SECTION HEADING, a
+   ABOUT THE AUTHOR TITLE
+   Keeps the heading elegant without dominating the card.
    ========================================================= */
 
 .about-section h2 {
   margin-top: 0;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
+
+  font-size: 1.8rem;
 }
 
 
 /* =========================================================
-   ABOUT SECTION PARAGRAPHS, a
-   Gives each paragraph breathing room.
+   ABOUT THE AUTHOR PARAGRAPHS
+   Tighter spacing makes the whole card shorter.
    ========================================================= */
 
 .about-section p {
-  margin: 0 0 18px 0;
+  margin: 0 0 12px 0;
 }
 
 .about-section p:last-child {
   margin-bottom: 0;
 }
-
-
-
-
