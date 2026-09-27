@@ -524,23 +524,18 @@ main > p > a:hover,
 
 
 /* =========================================================
-   ABOUT THE AUTHOR - FINAL CARD DESIGN
-   Wider, flatter and uses the same soft gradient as
-   the book-cover placeholders.
+   ABOUT THE AUTHOR
+   Wide rectangular panel matching the book-placeholder theme
    ========================================================= */
 
 .about-section {
-  max-width: 900px;
+  width: 88%;
+  max-width: 1000px;
 
-  margin: 30px auto 60px auto;
+  margin: 35px auto 65px auto;
 
-  padding: 28px 45px;
+  padding: 28px 38px;
 
-  text-align: center;
-
-  line-height: 1.6;
-
-  /* Same colour family as the empty book covers */
   background: linear-gradient(
     145deg,
     #fffafd,
@@ -549,70 +544,42 @@ main > p > a:hover,
 
   border: 1px solid #d8bac9;
 
-  border-radius: 18px;
+  border-radius: 12px;
 
-  box-shadow: 0 10px 25px rgba(73, 45, 59, 0.06);
+  box-shadow: 0 8px 24px rgba(73, 45, 59, 0.05);
+
+  text-align: center;
 }
 
 
 /* =========================================================
-   ABOUT THE AUTHOR TITLE
-   Keeps the heading elegant without dominating the card.
+   ABOUT TITLE
    ========================================================= */
 
 .about-section h2 {
-  margin-top: 0;
-  margin-bottom: 22px;
+  margin: 0 0 22px 0;
 
   font-size: 1.8rem;
 }
 
 
 /* =========================================================
-   ABOUT THE AUTHOR PARAGRAPHS
-   Tighter spacing makes the whole card shorter.
+   ABOUT TEXT
    ========================================================= */
 
 .about-section p {
-  margin: 0 0 12px 0;
+  max-width: 900px;
+
+  margin: 0 auto 12px auto;
+
+  line-height: 1.55;
+
+  font-size: 0.95rem;
 }
+
+
+/* Remove extra gap after final paragraph */
 
 .about-section p:last-child {
   margin-bottom: 0;
-}
-
-/* =========================================================
-   ABOUT THE AUTHOR - TYPOGRAPHY POLISH
-   Keeps the card centred but makes the biography easier
-   and more natural to read.
-   ========================================================= */
-
-.about-section {
-  padding: 30px 50px;
-
-  border-color: rgba(216, 186, 201, 0.75);
-
-  box-shadow: 0 8px 22px rgba(73, 45, 59, 0.04);
-}
-
-
-/* Keep the heading centred */
-.about-section h2 {
-  text-align: center;
-}
-
-
-/* Biography text */
-.about-section p {
-  max-width: 720px;
-
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 14px;
-
-  text-align: left;
-
-  font-size: 0.98rem;
-
-  line-height: 1.65;
 }
