@@ -829,3 +829,41 @@ main > p > a:hover,
   }
 
 }
+
+
+/* =========================================================
+   CHAPTER PAGE BACK BUTTONS
+   Matches the brown buttons used on the book pages.
+   ========================================================= */
+
+.chapter-page .back-button {
+  display: inline-block;
+
+  padding: 10px 20px;
+
+  background-color: #3f2d36;
+
+  color: white;
+
+  text-decoration: none;
+
+  border-radius: 25px;
+
+  font-weight: bold;
+
+  font-size: 0.9rem;
+
+  transition: 0.2s ease;
+}
+
+
+/* =========================================================
+   CHAPTER BUTTON HOVER
+   Slightly lightens when the mouse is over it.
+   ========================================================= */
+
+.chapter-page .back-button:hover {
+  background-color: #694f5c;
+
+  transform: translateY(-1px);
+}
