@@ -524,59 +524,37 @@ main > p > a:hover,
 
 
 /* =========================================================
-   ABOUT THE AUTHOR - FINAL CARD DESIGN
-   Wider, flatter and uses the same soft gradient as
-   the book-cover placeholders.
+   ABOUT THE AUTHOR - TYPOGRAPHY POLISH
+   Keeps the card centred but makes the biography easier
+   and more natural to read.
    ========================================================= */
 
 .about-section {
-  max-width: 900px;
+  padding: 30px 50px;
 
-  margin: 30px auto 60px auto;
+  border-color: rgba(216, 186, 201, 0.75);
 
-  padding: 28px 45px;
-
-  text-align: center;
-
-  line-height: 1.6;
-
-  /* Same colour family as the empty book covers */
-  background: linear-gradient(
-    145deg,
-    #fffafd,
-    #f2dfe8
-  );
-
-  border: 1px solid #d8bac9;
-
-  border-radius: 18px;
-
-  box-shadow: 0 10px 25px rgba(73, 45, 59, 0.06);
+  box-shadow: 0 8px 22px rgba(73, 45, 59, 0.04);
 }
 
 
-/* =========================================================
-   ABOUT THE AUTHOR TITLE
-   Keeps the heading elegant without dominating the card.
-   ========================================================= */
-
+/* Keep the heading centred */
 .about-section h2 {
-  margin-top: 0;
-  margin-bottom: 22px;
-
-  font-size: 1.8rem;
+  text-align: center;
 }
 
 
-/* =========================================================
-   ABOUT THE AUTHOR PARAGRAPHS
-   Tighter spacing makes the whole card shorter.
-   ========================================================= */
-
+/* Biography text */
 .about-section p {
-  margin: 0 0 12px 0;
-}
+  max-width: 720px;
 
-.about-section p:last-child {
-  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 14px;
+
+  text-align: left;
+
+  font-size: 0.98rem;
+
+  line-height: 1.65;
 }
