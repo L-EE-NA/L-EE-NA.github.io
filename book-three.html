@@ -173,6 +173,48 @@
           <a href="#">Placeholder Purchase Link</a>
         </p>
 
+
+
+                <!-- ===================================================
+             READER INTEREST
+             Readers can heart the book to show they want to read it.
+
+             data-book-id tells reader-interest.js which book
+             record in Firebase this page belongs to.
+
+             Government Property = government-property
+             Godless             = godless
+             C.U.L.T.            = cult
+             =================================================== -->
+
+        <div
+          class="reader-interest"
+          data-book-id="cult"
+        >
+
+          <p class="interest-question">
+            Want to read the full book?
+          </p>
+
+          <button
+            type="button"
+            class="interest-button"
+            id="interest-button"
+          >
+            <span class="interest-heart">♡</span>
+            <span>I want to read this</span>
+          </button>
+
+          <p class="interest-explainer">
+            Heart this so I know which books readers want me to prioritise.
+          </p>
+
+          <p class="interest-count" id="interest-count">
+            ♡ Reader interest
+          </p>
+
+        </div>
+        
       </div>
 
 
@@ -207,7 +249,28 @@
     </section>
 
 
-  </main>
+   </main>
+
+
+  <!-- =========================================================
+       READER INTEREST JAVASCRIPT
+       Loads the shared reader-interest.js file.
+
+       This file:
+       - connects this page to Firebase
+       - anonymously identifies the reader
+       - checks whether they already hearted this book
+       - loads the current reader-interest count
+       - saves a new heart when the button is clicked
+
+       type="module" is required because reader-interest.js
+       imports Firebase modules from Google's Firebase servers.
+       ========================================================= -->
+
+  <script
+    type="module"
+    src="reader-interest.js"
+  ></script>
 
 
 </body>
