@@ -2,11 +2,11 @@
    C.U.L.T. FREE BOOK CHAOS SYSTEM
 
    PURPOSE:
-   Makes unicorns, hamsters, rainbows, sparkles and other
-   nonsense explode out of the fake Order Summary.
+   Creatures explode out of the Order Summary ONCE.
 
-   Some creatures fly BEHIND the page.
-   Some creatures fly IN FRONT of the page.
+   After the opening explosion, they settle into fixed
+   positions around the receipt and continue spinning,
+   bobbing and wobbling in place.
 
    This file is ONLY used by cult-free.html.
    ========================================================= */
@@ -15,7 +15,7 @@
 /* =========================================================
    CHAOS CHARACTERS
 
-   Add or remove emojis from this list whenever you want.
+   Add or remove emojis here whenever you want.
    ========================================================= */
 
 const chaosCharacters = [
@@ -31,30 +31,16 @@ const chaosCharacters = [
 
 
 /* =========================================================
-   CHAOS AMOUNTS
+   HOW MANY CREATURES APPEAR
 
-   Increase these numbers for more insanity.
-   Lower them if the page becomes too chaotic.
-
-   openingExplosionSize:
-   Big explosion when the page first loads.
-
-   wanderingCreatureCount:
-   Creatures that keep flying around indefinitely.
-
-   repeatingExplosionSize:
-   Smaller explosions that happen every few seconds.
+   Increase this number for more chaos.
    ========================================================= */
 
-const openingExplosionSize = 55;
-
-const wanderingCreatureCount = 22;
-
-const repeatingExplosionSize = 14;
+const creatureCount = 20;
 
 
 /* =========================================================
-   FIND THE IMPORTANT HTML ELEMENTS
+   FIND IMPORTANT PAGE ELEMENTS
    ========================================================= */
 
 const receipt =
@@ -68,10 +54,10 @@ const frontLayer =
 
 
 /* =========================================================
-   REDUCED MOTION CHECK
+   ACCESSIBILITY
 
-   If somebody has asked their browser/device for reduced
-   animation, we do not generate the chaos.
+   If someone has reduced-motion enabled,
+   do not run the animation.
    ========================================================= */
 
 const prefersReducedMotion =
@@ -81,7 +67,7 @@ const prefersReducedMotion =
 
 
 /* =========================================================
-   START ONLY IF EVERYTHING EXISTS
+   START THE CHAOS
    ========================================================= */
 
 if (
@@ -91,417 +77,397 @@ if (
   !prefersReducedMotion
 ) {
 
-  startCultChaos();
+  setTimeout(() => {
+
+    releaseCreatures();
+
+  }, 450);
 
 }
 
 
 /* =========================================================
-   START THE CHAOS
+   RELEASE CREATURES
+
+   They begin in the centre of the receipt,
+   fly outward once,
+   then stay around it permanently.
    ========================================================= */
 
-function startCultChaos() {
+function releaseCreatures() {
 
-  /* Give the page a tiny moment to load first. */
+  const receiptBox =
+    receipt.getBoundingClientRect();
 
-  setTimeout(() => {
 
-    createExplosion(openingExplosionSize);
+  const startX =
+    receiptBox.left +
+    receiptBox.width / 2;
 
-    createWanderingCreatures(
-      wanderingCreatureCount
+
+  const startY =
+    receiptBox.top +
+    receiptBox.height / 2;
+
+
+  for (
+    let i = 0;
+    i < creatureCount;
+    i++
+  ) {
+
+    createCreature(
+      i,
+      startX,
+      startY,
+      receiptBox
     );
 
-  }, 450);
+  }
+
+}
 
 
-  /* =======================================================
-     REPEATING EXPLOSIONS
+/* =========================================================
+   CREATE ONE CREATURE
+   ========================================================= */
 
-     Every 5.2 seconds, the receipt spits out another
-     smaller batch of magical nonsense.
-     ======================================================= */
+function createCreature(
+  index,
+  startX,
+  startY,
+  receiptBox
+) {
 
-  setInterval(() => {
+  const creature =
+    document.createElement("span");
 
-    createExplosion(
-      repeatingExplosionSize
+
+  creature.className =
+    "cult-chaos-particle";
+
+
+  creature.textContent =
+    randomCharacter();
+
+
+  /* =====================================================
+     FRONT OR BACK
+
+     Some creatures appear behind the page.
+     Others appear in front of normal page content.
+
+     The receipt itself stays above all of them.
+     ===================================================== */
+
+  const layer =
+    Math.random() < 0.45
+      ? behindLayer
+      : frontLayer;
+
+
+  layer.appendChild(creature);
+
+
+  /* =====================================================
+     RANDOM CREATURE SIZE
+     ===================================================== */
+
+  creature.style.fontSize =
+    `${randomNumber(28, 62)}px`;
+
+
+  /* =====================================================
+     START INSIDE ORDER SUMMARY
+     ===================================================== */
+
+  creature.style.left =
+    `${startX}px`;
+
+  creature.style.top =
+    `${startY}px`;
+
+
+  /* =====================================================
+     FIND A FIXED DESTINATION
+
+     Creatures are distributed around the receipt,
+     rather than directly on top of it.
+     ===================================================== */
+
+  const destination =
+    getPositionAroundReceipt(
+      index,
+      receiptBox
     );
 
-  }, 5200);
+
+  const moveX =
+    destination.x -
+    startX;
 
 
-  /* =======================================================
-     CLICKING THE RECEIPT
+  const moveY =
+    destination.y -
+    startY;
 
-     If somebody clicks the Order Summary,
-     another explosion immediately happens.
-     ======================================================= */
 
-  receipt.addEventListener(
-    "click",
-    () => {
+  /* =====================================================
+     OPENING EXPLOSION
 
-      createExplosion(25);
+     Creature flies outward ONCE.
+     ===================================================== */
 
+  const openingAnimation =
+    creature.animate(
+
+      [
+        {
+          transform:
+            "translate(-50%, -50%) scale(0.2) rotate(0deg)",
+
+          opacity: 0
+        },
+
+        {
+          opacity: 1,
+          offset: 0.12
+        },
+
+        {
+          transform:
+            `translate(-50%, -50%)
+             translate(
+               ${moveX}px,
+               ${moveY}px
+             )
+             scale(1)
+             rotate(
+               ${randomNumber(-540, 540)}deg
+             )`,
+
+          opacity: 1
+        }
+      ],
+
+      {
+        duration:
+          randomNumber(
+            1400,
+            2400
+          ),
+
+        easing:
+          "cubic-bezier(.15,.75,.25,1)",
+
+        fill:
+          "forwards"
+      }
+
+    );
+
+
+  /* =====================================================
+     AFTER THE EXPLOSION
+
+     Move the creature permanently to its destination,
+     then start its little in-place animation.
+     ===================================================== */
+
+  openingAnimation.finished.then(() => {
+
+    creature.style.left =
+      `${destination.x}px`;
+
+    creature.style.top =
+      `${destination.y}px`;
+
+    creature.style.transform =
+      "translate(-50%, -50%)";
+
+
+    startIdleAnimation(
+      creature
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   POSITIONS AROUND THE RECEIPT
+
+   Creatures form a loose ring around the Order Summary.
+
+   They are deliberately pushed OUTSIDE the receipt area
+   so the receipt stays readable.
+   ========================================================= */
+
+function getPositionAroundReceipt(
+  index,
+  receiptBox
+) {
+
+  const angle =
+    (
+      index /
+      creatureCount
+    ) *
+    Math.PI *
+    2;
+
+
+  /* Horizontal distance from receipt */
+
+  const radiusX =
+    receiptBox.width / 2 +
+    randomNumber(
+      70,
+      180
+    );
+
+
+  /* Vertical distance from receipt */
+
+  const radiusY =
+    receiptBox.height / 2 +
+    randomNumber(
+      50,
+      140
+    );
+
+
+  let x =
+    receiptBox.left +
+    receiptBox.width / 2 +
+    Math.cos(angle) *
+    radiusX;
+
+
+  let y =
+    receiptBox.top +
+    receiptBox.height / 2 +
+    Math.sin(angle) *
+    radiusY;
+
+
+  /* =====================================================
+     KEEP THEM INSIDE THE SCREEN
+     ===================================================== */
+
+  x =
+    Math.max(
+      30,
+      Math.min(
+        window.innerWidth - 30,
+        x
+      )
+    );
+
+
+  y =
+    Math.max(
+      30,
+      Math.min(
+        window.innerHeight - 30,
+        y
+      )
+    );
+
+
+  return {
+    x,
+    y
+  };
+
+}
+
+
+/* =========================================================
+   IDLE ANIMATION
+
+   After settling, each creature stays in its own place
+   and gently spins / bobs / wiggles forever.
+   ========================================================= */
+
+function startIdleAnimation(
+  creature
+) {
+
+  const bobAmount =
+    randomNumber(
+      5,
+      16
+    );
+
+
+  const rotationAmount =
+    randomNumber(
+      12,
+      45
+    );
+
+
+  const direction =
+    Math.random() < 0.5
+      ? -1
+      : 1;
+
+
+  creature.animate(
+
+    [
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) rotate(0deg)"
+      },
+
+      {
+        transform:
+          `translate(-50%, -50%)
+           translateY(-${bobAmount}px)
+           rotate(
+             ${rotationAmount * direction}deg
+           )`
+      },
+
+      {
+        transform:
+          `translate(-50%, -50%)
+           translateY(${bobAmount / 2}px)
+           rotate(
+             ${-rotationAmount * direction}deg
+           )`
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) rotate(0deg)"
+      }
+    ],
+
+    {
+      duration:
+        randomNumber(
+          2600,
+          5200
+        ),
+
+      iterations:
+        Infinity,
+
+      easing:
+        "ease-in-out"
     }
+
   );
 
 }
 
 
 /* =========================================================
-   CREATE AN EXPLOSION
-
-   All particles begin in the centre of the Order Summary
-   and shoot outward in random directions.
-   ========================================================= */
-
-function createExplosion(amount) {
-
-  const receiptBox =
-    receipt.getBoundingClientRect();
-
-
-  /* Centre of the receipt on the screen */
-
-  const startX =
-    receiptBox.left +
-    receiptBox.width / 2;
-
-  const startY =
-    receiptBox.top +
-    receiptBox.height / 2;
-
-
-  for (
-    let i = 0;
-    i < amount;
-    i++
-  ) {
-
-    /* =====================================================
-       CREATE ONE PARTICLE
-       ===================================================== */
-
-    const particle =
-      document.createElement("span");
-
-
-    particle.className =
-      "cult-chaos-particle cult-chaos-burst";
-
-
-    particle.textContent =
-      randomCharacter();
-
-
-    /* =====================================================
-       CHOOSE WHETHER IT FLIES BEHIND OR IN FRONT
-
-       Roughly half go behind the page.
-       Roughly half fly directly across it.
-       ===================================================== */
-
-    const layer =
-      Math.random() < 0.5
-        ? behindLayer
-        : frontLayer;
-
-
-    layer.appendChild(particle);
-
-
-    /* =====================================================
-       START IN THE CENTRE OF THE RECEIPT
-       ===================================================== */
-
-    particle.style.left =
-      `${startX}px`;
-
-    particle.style.top =
-      `${startY}px`;
-
-
-    /* =====================================================
-       RANDOM SIZE
-       ===================================================== */
-
-    particle.style.fontSize =
-      `${randomNumber(24, 65)}px`;
-
-
-    /* =====================================================
-       RANDOM DIRECTION + DISTANCE
-       ===================================================== */
-
-    const angle =
-      Math.random() *
-      Math.PI *
-      2;
-
-
-    const distance =
-      randomNumber(250, 850);
-
-
-    const destinationX =
-      Math.cos(angle) *
-      distance;
-
-
-    const destinationY =
-      Math.sin(angle) *
-      distance;
-
-
-    particle.style.setProperty(
-      "--chaos-x",
-      `${destinationX}px`
-    );
-
-
-    particle.style.setProperty(
-      "--chaos-y",
-      `${destinationY}px`
-    );
-
-
-    /* =====================================================
-       RANDOM SPIN
-       ===================================================== */
-
-    particle.style.setProperty(
-      "--chaos-rotation",
-      `${randomNumber(-900, 900)}deg`
-    );
-
-
-    /* =====================================================
-       RANDOM FINAL SIZE
-       ===================================================== */
-
-    particle.style.setProperty(
-      "--chaos-scale",
-      randomNumber(0.7, 1.6)
-    );
-
-
-    /* =====================================================
-       RANDOM ANIMATION SPEED
-       ===================================================== */
-
-    const duration =
-      randomNumber(2200, 4800);
-
-
-    particle.style.setProperty(
-      "--chaos-duration",
-      `${duration}ms`
-    );
-
-
-    /* =====================================================
-       CLEAN UP AFTER THE EXPLOSION
-
-       Removes finished particles so thousands of invisible
-       emojis do not accumulate in the page forever.
-       ===================================================== */
-
-    setTimeout(() => {
-
-      particle.remove();
-
-    }, duration + 250);
-
-  }
-
-}
-
-
-/* =========================================================
-   CREATE WANDERING CREATURES
-
-   These do NOT disappear.
-
-   They continually fly between random locations around
-   the screen, spinning as they travel.
-   ========================================================= */
-
-function createWanderingCreatures(amount) {
-
-  const receiptBox =
-    receipt.getBoundingClientRect();
-
-
-  const startX =
-    receiptBox.left +
-    receiptBox.width / 2;
-
-  const startY =
-    receiptBox.top +
-    receiptBox.height / 2;
-
-
-  for (
-    let i = 0;
-    i < amount;
-    i++
-  ) {
-
-    /* =====================================================
-       CREATE CREATURE
-       ===================================================== */
-
-    const creature =
-      document.createElement("span");
-
-
-    creature.className =
-      "cult-chaos-particle";
-
-
-    creature.textContent =
-      randomCharacter();
-
-
-    /* =====================================================
-       FRONT OR BACK LAYER
-       ===================================================== */
-
-    const layer =
-      Math.random() < 0.45
-        ? behindLayer
-        : frontLayer;
-
-
-    layer.appendChild(creature);
-
-
-    /* =====================================================
-       START AT THE RECEIPT
-       ===================================================== */
-
-    creature.style.left =
-      `${startX}px`;
-
-    creature.style.top =
-      `${startY}px`;
-
-
-    creature.style.fontSize =
-      `${randomNumber(28, 72)}px`;
-
-
-    /* =====================================================
-       BUILD RANDOM FLIGHT PATH
-
-       First point keeps the creature at the receipt.
-       The remaining points send it around the screen.
-       ===================================================== */
-
-    const waypoints = [
-
-      {
-        transform:
-          "translate(-50%, -50%) rotate(0deg) scale(0.3)"
-      }
-
-    ];
-
-
-    for (
-      let point = 0;
-      point < 7;
-      point++
-    ) {
-
-      const targetX =
-        randomNumber(
-          30,
-          Math.max(
-            31,
-            window.innerWidth - 70
-          )
-        );
-
-
-      const targetY =
-        randomNumber(
-          30,
-          Math.max(
-            31,
-            window.innerHeight - 70
-          )
-        );
-
-
-      const translateX =
-        targetX -
-        startX;
-
-
-      const translateY =
-        targetY -
-        startY;
-
-
-      waypoints.push({
-
-        transform:
-          `translate(-50%, -50%)
-           translate(
-             ${translateX}px,
-             ${translateY}px
-           )
-           rotate(
-             ${randomNumber(-700, 700)}deg
-           )
-           scale(
-             ${randomNumber(0.7, 1.4)}
-           )`
-
-      });
-
-    }
-
-
-    /* =====================================================
-       ANIMATE FOREVER
-       ===================================================== */
-
-    creature.animate(
-
-      waypoints,
-
-      {
-        duration:
-          randomNumber(
-            11000,
-            23000
-          ),
-
-        iterations:
-          Infinity,
-
-        direction:
-          "alternate",
-
-        easing:
-          "ease-in-out"
-      }
-
-    );
-
-  }
-
-}
-
-
-/* =========================================================
    RANDOM CHARACTER
-
-   Picks one emoji from chaosCharacters.
    ========================================================= */
 
 function randomCharacter() {
@@ -518,8 +484,6 @@ function randomCharacter() {
 
 /* =========================================================
    RANDOM NUMBER
-
-   Used for random sizes, positions, spins and speeds.
    ========================================================= */
 
 function randomNumber(
