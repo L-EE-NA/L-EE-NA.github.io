@@ -1138,3 +1138,266 @@ function randomNumber(
   );
 
 }
+
+
+
+
+
+
+
+
+/* =========================================================
+   "NO. I WANNA PAY." BUTTON BREAKDOWN
+
+   DESKTOP:
+   Hovering over the button triggers the full breakdown.
+
+   MOBILE / TOUCH:
+   Tapping the button plays the breakdown FIRST.
+   After the animation finishes, the browser continues
+   to cult-support.html.
+   ========================================================= */
+
+const payButton =
+  document.querySelector(
+    ".cult-pay-button"
+  );
+
+
+const desktopHoverAvailable =
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  );
+
+
+const reduceButtonMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+
+let payButtonIsPanicking =
+  false;
+
+
+/* =========================================================
+   START BUTTON PANIC
+   ========================================================= */
+
+function startPayButtonPanic(
+  navigateAfter = false
+) {
+
+  if (
+    !payButton ||
+    payButtonIsPanicking
+  ) {
+
+    return;
+
+  }
+
+
+  /* Reduced-motion users skip the performance. */
+
+  if (
+    reduceButtonMotion.matches
+  ) {
+
+    if (
+      navigateAfter
+    ) {
+
+      window.location.href =
+        payButton.href;
+
+    }
+
+    return;
+
+  }
+
+
+  payButtonIsPanicking =
+    true;
+
+
+  /* =======================================================
+     CHOOSE WHICH SIDE THE BUTTON TRIES TO ESCAPE TOWARDS
+
+     It runs toward whichever side has more space.
+     ======================================================= */
+
+  const buttonBox =
+    payButton.getBoundingClientRect();
+
+
+  const roomOnLeft =
+    buttonBox.left;
+
+
+  const roomOnRight =
+    window.innerWidth -
+    buttonBox.right;
+
+
+  const escapeAmount =
+    100;
+
+
+  const escapeX =
+    roomOnRight >= roomOnLeft
+      ? escapeAmount
+      : -escapeAmount;
+
+
+  const yankX =
+    escapeX > 0
+      ? -32
+      : 32;
+
+
+  payButton.style.setProperty(
+    "--panic-escape-x",
+    `${escapeX}px`
+  );
+
+
+  payButton.style.setProperty(
+    "--panic-yank-x",
+    `${yankX}px`
+  );
+
+
+  /* =======================================================
+     START THE CSS BREAKDOWN
+     ======================================================= */
+
+  payButton.classList.remove(
+    "is-panicking"
+  );
+
+
+  /* Forces the browser to reset the animation
+     so it can play again later. */
+
+  void payButton.offsetWidth;
+
+
+  payButton.classList.add(
+    "is-panicking"
+  );
+
+
+  /* =======================================================
+     WAIT FOR THE ENTIRE BREAKDOWN TO FINISH
+     ======================================================= */
+
+  payButton.addEventListener(
+
+    "animationend",
+
+    () => {
+
+      payButton.classList.remove(
+        "is-panicking"
+      );
+
+
+      payButtonIsPanicking =
+        false;
+
+
+      /* On mobile:
+         NOW we are allowed to leave the page. */
+
+      if (
+        navigateAfter
+      ) {
+
+        window.location.href =
+          payButton.href;
+
+      }
+
+    },
+
+    {
+      once: true
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   DESKTOP
+
+   Hovering triggers the breakdown.
+
+   Clicking still follows the link normally.
+   ========================================================= */
+
+if (
+  payButton &&
+  desktopHoverAvailable.matches
+) {
+
+  payButton.addEventListener(
+    "pointerenter",
+    () => {
+
+      startPayButtonPanic(
+        false
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MOBILE / TOUCH
+
+   Phones do not have proper hover.
+
+   Tapping:
+   1. Stops the link temporarily.
+   2. Plays the full breakdown.
+   3. Goes to cult-support.html afterwards.
+   ========================================================= */
+
+if (
+  payButton
+) {
+
+  payButton.addEventListener(
+    "click",
+    event => {
+
+      /* Desktop clicks behave normally. */
+
+      if (
+        desktopHoverAvailable.matches
+      ) {
+
+        return;
+
+      }
+
+
+      /* Mobile: DON'T leave yet. */
+
+      event.preventDefault();
+
+
+      startPayButtonPanic(
+        true
+      );
+
+    }
+  );
+
+}
