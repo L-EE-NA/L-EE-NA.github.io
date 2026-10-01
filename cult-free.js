@@ -430,15 +430,15 @@ const landing =
 
 const lingerDuration =
   randomNumber(
-    900,
-    2200
+    150,
+    700
   );
 
 
 const fadeDuration =
   randomNumber(
-    900,
-    1500
+    450,
+    700
   );
 
 
@@ -449,13 +449,47 @@ setTimeout(() => {
 
       [
         {
+          transform:
+            "translate(-50%, -50%) scale(1)",
+
           opacity:
-            finalOpacity
+            finalOpacity,
+
+          offset:
+            0
         },
 
         {
+          transform:
+            "translate(-50%, -50%) scale(0.82)",
+
           opacity:
-            0
+            finalOpacity,
+
+          offset:
+            0.22
+        },
+
+        {
+          transform:
+            "translate(-50%, -50%) scale(1.28)",
+
+          opacity:
+            finalOpacity,
+
+          offset:
+            0.55
+        },
+
+        {
+          transform:
+            "translate(-50%, -50%) scale(0.1)",
+
+          opacity:
+            0,
+
+          offset:
+            1
         }
       ],
 
