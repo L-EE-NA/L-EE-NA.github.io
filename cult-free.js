@@ -233,12 +233,13 @@ function createParticle(
      OUTSIDE the receipt area.
      ======================================================= */
 
-  const landing =
-    getLandingPosition(
-      startX,
-      startY,
-      receiptBox
-    );
+const landing =
+  getLandingPosition(
+    startX,
+    startY,
+    receiptBox,
+    size
+  );
 
 
   const moveX =
@@ -418,16 +419,77 @@ function createParticle(
 function getLandingPosition(
   startX,
   startY,
-  receiptBox
+  receiptBox,
+  size
 ) {
 
-  let finalX;
-  let finalY;
+  /* =======================================================
+     FORBIDDEN LANDING AREAS
 
+     Emojis are NOT allowed to settle over any of these.
+
+     They can still explode dramatically out of the receipt,
+     but their final resting positions must be elsewhere.
+     ======================================================= */
+
+  const protectedElements = [
+
+    document.querySelector(
+      ".cult-free-label"
+    ),
+
+    document.querySelector(
+      ".cult-free-title"
+    ),
+
+    document.querySelector(
+      ".cult-free-subtitle"
+    ),
+
+    document.querySelector(
+      ".cult-receipt"
+    ),
+
+    document.querySelector(
+      ".cult-read-button"
+    ),
+
+    document.querySelector(
+      ".cult-free-warning"
+    ),
+
+    document.querySelector(
+      ".cult-free-return"
+    )
+
+  ].filter(Boolean);
+
+
+  /* =======================================================
+     EXTRA SPACE AROUND WRITING
+
+     Larger emojis automatically receive a larger
+     protection zone.
+     ======================================================= */
+
+  const protection =
+    size / 2 + 28;
+
+
+  const screenEdge =
+    size / 2 + 12;
+
+
+  /* =======================================================
+     TRY RANDOM LANDING POSITIONS
+
+     We give it plenty of attempts to find somewhere
+     scattered but NOT on top of important content.
+     ======================================================= */
 
   for (
     let attempt = 0;
-    attempt < 30;
+    attempt < 120;
     attempt++
   ) {
 
@@ -441,31 +503,33 @@ function getLandingPosition(
     const distance =
       randomNumber(
         280,
-        650
+        680
       );
 
 
-    finalX =
+    let finalX =
       startX +
       Math.cos(angle) *
       distance;
 
 
-    finalY =
+    let finalY =
       startY +
       Math.sin(angle) *
       distance;
 
 
     /* =====================================================
-       KEEP INSIDE SCREEN
+       KEEP THE WHOLE EMOJI INSIDE THE SCREEN
        ===================================================== */
 
     finalX =
       Math.max(
-        35,
+        screenEdge,
         Math.min(
-          window.innerWidth - 35,
+          window.innerWidth -
+          screenEdge,
+
           finalX
         )
       );
@@ -473,71 +537,204 @@ function getLandingPosition(
 
     finalY =
       Math.max(
-        35,
+        screenEdge,
         Math.min(
-          window.innerHeight - 35,
+          window.innerHeight -
+          screenEdge,
+
           finalY
         )
       );
 
 
     /* =====================================================
-       PROTECTED RECEIPT AREA
+       CHECK EVERY FORBIDDEN AREA
 
-       Adds extra breathing room around the Order Summary.
+       If this position would put the emoji too close
+       to any important text/button/receipt, reject it.
        ===================================================== */
 
-    const protection =
-      55;
+    const touchesProtectedArea =
+      protectedElements.some(
+        element => {
+
+          const box =
+            element.getBoundingClientRect();
 
 
-    const insideProtectedReceipt =
+          return (
 
-      finalX >
-        receiptBox.left -
-        protection
+            finalX >
+              box.left -
+              protection
 
-      &&
+            &&
 
-      finalX <
-        receiptBox.right +
-        protection
+            finalX <
+              box.right +
+              protection
 
-      &&
+            &&
 
-      finalY >
-        receiptBox.top -
-        protection
+            finalY >
+              box.top -
+              protection
 
-      &&
+            &&
 
-      finalY <
-        receiptBox.bottom +
-        protection;
+            finalY <
+              box.bottom +
+              protection
 
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       SAFE POSITION FOUND
+       ===================================================== */
 
     if (
-      !insideProtectedReceipt
+      !touchesProtectedArea
     ) {
 
-      break;
+      return {
+
+        x: finalX,
+
+        y: finalY
+
+      };
 
     }
 
   }
 
 
+  /* =======================================================
+     FALLBACK POSITIONS
+
+     Extremely unlikely to be needed, but if random
+     searching fails, try positions around the outer edges.
+     ======================================================= */
+
+  const fallbackPositions = [
+
+    {
+      x: screenEdge,
+      y: window.innerHeight * 0.25
+    },
+
+    {
+      x: screenEdge,
+      y: window.innerHeight * 0.50
+    },
+
+    {
+      x: screenEdge,
+      y: window.innerHeight * 0.75
+    },
+
+    {
+      x:
+        window.innerWidth -
+        screenEdge,
+
+      y:
+        window.innerHeight *
+        0.25
+    },
+
+    {
+      x:
+        window.innerWidth -
+        screenEdge,
+
+      y:
+        window.innerHeight *
+        0.50
+    },
+
+    {
+      x:
+        window.innerWidth -
+        screenEdge,
+
+      y:
+        window.innerHeight *
+        0.75
+    }
+
+  ];
+
+
+  for (
+    const position
+    of fallbackPositions
+  ) {
+
+    const touchesProtectedArea =
+      protectedElements.some(
+        element => {
+
+          const box =
+            element.getBoundingClientRect();
+
+
+          return (
+
+            position.x >
+              box.left -
+              protection
+
+            &&
+
+            position.x <
+              box.right +
+              protection
+
+            &&
+
+            position.y >
+              box.top -
+              protection
+
+            &&
+
+            position.y <
+              box.bottom +
+              protection
+
+          );
+
+        }
+      );
+
+
+    if (
+      !touchesProtectedArea
+    ) {
+
+      return position;
+
+    }
+
+  }
+
+
+  /* Absolute last resort */
+
   return {
 
-    x: finalX,
+    x: screenEdge,
 
-    y: finalY
+    y: screenEdge
 
   };
 
 }
-
-
 /* =========================================================
    IDLE MOVEMENT
 
