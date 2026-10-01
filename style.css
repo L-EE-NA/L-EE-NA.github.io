@@ -1276,7 +1276,7 @@ main > p > a:hover,
 .cult-read-button:hover {
   background-color: #945f79;
 
-  transform: translateY(-3px) rotate(-1deg);
+  transform: translateY(-2px);
 }
 
 /* =========================================================
