@@ -1312,166 +1312,128 @@ main > p > a:hover,
 
 
 /* =========================================================
-   FLOATING UNICORNS / HAMSTERS / SPARKLES
-   Decorative nonsense only.
+   C.U.L.T. CHAOS SYSTEM
+   Flying creatures created by cult-free.js.
    ========================================================= */
 
-.cult-chaos {
+
+/* =========================================================
+   FULL-SCREEN CHAOS LAYERS
+   JavaScript puts creatures into these two layers.
+
+   BEHIND = creatures pass behind the main page.
+   FRONT  = creatures can fly directly over the page.
+   ========================================================= */
+
+.cult-chaos-layer {
   position: fixed;
 
-  z-index: 2;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
 
   pointer-events: none;
 
+  overflow: hidden;
+}
+
+
+.cult-chaos-behind {
+  z-index: 5;
+}
+
+
+.cult-chaos-front {
+  z-index: 30;
+}
+
+/* =========================================================
+   INDIVIDUAL FLYING CREATURE
+   JavaScript chooses its emoji, size and direction.
+   ========================================================= */
+
+.cult-chaos-particle {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  display: block;
+
+  line-height: 1;
+
   user-select: none;
-}
+  pointer-events: none;
 
+  will-change: transform, opacity;
 
-.cult-chaos-one {
-  top: 12%;
-  left: -80px;
-
-  font-size: 4rem;
-
-  animation: cult-fly-across 13s linear infinite;
-}
-
-
-.cult-chaos-two {
-  bottom: 7%;
-  left: -70px;
-
-  font-size: 3rem;
-
-  animation: cult-hamster-run 9s linear infinite;
-}
-
-
-.cult-chaos-three {
-  top: 22%;
-  right: 8%;
-
-  font-size: 2.5rem;
-
-  animation: cult-sparkle-spin 4s ease-in-out infinite;
-}
-
-
-.cult-chaos-four {
-  bottom: 20%;
-  right: 4%;
-
-  font-size: 3.5rem;
-
-  animation: cult-rainbow-bob 5s ease-in-out infinite;
+  filter: drop-shadow(
+    0 4px 5px rgba(75, 45, 65, 0.15)
+  );
 }
 
 
 /* =========================================================
-   UNICORN FLIES ACROSS SCREEN
+   EXPLOSION PARTICLES
+   Burst outward from the Order Summary box.
    ========================================================= */
 
-@keyframes cult-fly-across {
+.cult-chaos-burst {
+  animation:
+    cult-chaos-explode
+    var(--chaos-duration)
+    cubic-bezier(.15, .7, .25, 1)
+    forwards;
+}
+
+
+@keyframes cult-chaos-explode {
 
   0% {
-    transform: translateX(-100px) translateY(0) rotate(-5deg);
+    transform:
+      translate(-50%, -50%)
+      translate(0, 0)
+      rotate(0deg)
+      scale(0.25);
+
+    opacity: 0;
   }
 
-  50% {
-    transform: translateX(55vw) translateY(-35px) rotate(4deg);
+  10% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
   }
 
   100% {
-    transform: translateX(120vw) translateY(20px) rotate(-5deg);
+    transform:
+      translate(-50%, -50%)
+      translate(
+        var(--chaos-x),
+        var(--chaos-y)
+      )
+      rotate(var(--chaos-rotation))
+      scale(var(--chaos-scale));
+
+    opacity: 0;
   }
 
 }
 
 
 /* =========================================================
-   HAMSTER RUNS ACROSS BOTTOM
+   ACCESSIBILITY
+   Hides the flying chaos for people who have asked their
+   device/browser to reduce animation.
    ========================================================= */
 
-@keyframes cult-hamster-run {
+@media (prefers-reduced-motion: reduce) {
 
-  0% {
-    transform: translateX(-80px) rotate(-8deg);
-  }
-
-  50% {
-    transform: translateX(55vw) rotate(8deg);
-  }
-
-  100% {
-    transform: translateX(120vw) rotate(-8deg);
+  .cult-chaos-layer {
+    display: none;
   }
 
 }
-
-
-/* =========================================================
-   SPARKLE ROTATION
-   ========================================================= */
-
-@keyframes cult-sparkle-spin {
-
-  0%,
-  100% {
-    transform: rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: rotate(180deg) scale(1.35);
-  }
-
-}
-
-
-/* =========================================================
-   RAINBOW FLOATING
-   ========================================================= */
-
-@keyframes cult-rainbow-bob {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(-4deg);
-  }
-
-  50% {
-    transform: translateY(-25px) rotate(5deg);
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE JOKE PAGE
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-  .cult-free-container {
-    width: 90%;
-
-    padding-top: 55px;
-  }
-
-  .cult-free-title {
-    font-size: 2.4rem;
-  }
-
-  .cult-receipt {
-    padding: 22px;
-  }
-
-  .cult-chaos-one {
-    font-size: 3rem;
-  }
-
-  .cult-chaos-two {
-    font-size: 2.4rem;
-  }
-
-}
-
