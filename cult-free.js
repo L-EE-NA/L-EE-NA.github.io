@@ -1,46 +1,254 @@
 /* =========================================================
-   C.U.L.T. FREE BOOK CHAOS SYSTEM
+   C.U.L.T. FREE BOOK - CURATED CHAOS SYSTEM
 
    PURPOSE:
-   Creatures explode out of the Order Summary ONCE.
+   The creatures burst out of the Order Summary ONCE.
 
-   After the opening explosion, they settle into fixed
-   positions around the receipt and continue spinning,
-   bobbing and wobbling in place.
+   They then settle into deliberately chosen positions
+   around the OUTSIDE of the page content.
+
+   After settling, every creature stays in its own spot
+   but has its own movement:
+   hovering, spinning, flipping, wiggling, bouncing, etc.
 
    This file is ONLY used by cult-free.html.
    ========================================================= */
 
 
 /* =========================================================
-   CHAOS CHARACTERS
+   CREATURE LAYOUT
 
-   Add or remove emojis here whenever you want.
+   x = horizontal position as a percentage of the screen.
+   y = vertical position as a percentage of the screen.
+
+   size = emoji size in pixels.
+
+   move = animation style after the creature settles.
+
+   layer:
+   front  = clear and colourful
+   behind = softer background decoration
+
+   The positions are deliberately concentrated around
+   the OUTER EDGES so the writing remains readable.
    ========================================================= */
 
-const chaosCharacters = [
-  "🦄",
-  "🐹",
-  "🌈",
-  "✨",
-  "⭐",
-  "💖",
-  "🎀",
-  "💫"
+const chaosItems = [
+
+  /* ===== TOP OUTER AREA ===== */
+
+  {
+    emoji: "🦄",
+    x: 7,
+    y: 10,
+    size: 56,
+    move: "hover",
+    layer: "front"
+  },
+
+  {
+    emoji: "🫧",
+    x: 20,
+    y: 7,
+    size: 48,
+    move: "pulse",
+    layer: "behind"
+  },
+
+  {
+    emoji: "🌟",
+    x: 82,
+    y: 8,
+    size: 48,
+    move: "spin",
+    layer: "behind"
+  },
+
+  {
+    emoji: "🍭",
+    x: 94,
+    y: 13,
+    size: 50,
+    move: "wiggle",
+    layer: "front"
+  },
+
+
+  /* ===== LEFT SIDE ===== */
+
+  {
+    emoji: "🐹",
+    x: 6,
+    y: 27,
+    size: 54,
+    move: "bounce",
+    layer: "front"
+  },
+
+  {
+    emoji: "🌈",
+    x: 13,
+    y: 38,
+    size: 52,
+    move: "sway",
+    layer: "front"
+  },
+
+  {
+    emoji: "🎀",
+    x: 6,
+    y: 49,
+    size: 50,
+    move: "flip",
+    layer: "front"
+  },
+
+  {
+    emoji: "🍓",
+    x: 13,
+    y: 60,
+    size: 48,
+    move: "hover",
+    layer: "front"
+  },
+
+  {
+    emoji: "💫",
+    x: 6,
+    y: 72,
+    size: 48,
+    move: "spin-reverse",
+    layer: "front"
+  },
+
+  {
+    emoji: "🧁",
+    x: 14,
+    y: 84,
+    size: 50,
+    move: "wiggle",
+    layer: "front"
+  },
+
+  {
+    emoji: "☁️",
+    x: 7,
+    y: 92,
+    size: 62,
+    move: "float",
+    layer: "behind"
+  },
+
+
+  /* ===== RIGHT SIDE ===== */
+
+  {
+    emoji: "🦋",
+    x: 94,
+    y: 25,
+    size: 48,
+    move: "flutter",
+    layer: "front"
+  },
+
+  {
+    emoji: "💖",
+    x: 86,
+    y: 36,
+    size: 52,
+    move: "pulse",
+    layer: "front"
+  },
+
+  {
+    emoji: "⭐",
+    x: 94,
+    y: 48,
+    size: 54,
+    move: "spin",
+    layer: "front"
+  },
+
+  {
+    emoji: "🍬",
+    x: 86,
+    y: 60,
+    size: 46,
+    move: "flip",
+    layer: "front"
+  },
+
+  {
+    emoji: "🐣",
+    x: 94,
+    y: 71,
+    size: 48,
+    move: "bounce",
+    layer: "front"
+  },
+
+  {
+    emoji: "🌸",
+    x: 86,
+    y: 82,
+    size: 50,
+    move: "sway",
+    layer: "front"
+  },
+
+  {
+    emoji: "🦄",
+    x: 94,
+    y: 92,
+    size: 54,
+    move: "hover",
+    layer: "front"
+  },
+
+
+  /* ===== BOTTOM OUTER AREA ===== */
+
+  {
+    emoji: "🌈",
+    x: 28,
+    y: 88,
+    size: 54,
+    move: "wiggle",
+    layer: "front"
+  },
+
+  {
+    emoji: "✨",
+    x: 38,
+    y: 94,
+    size: 46,
+    move: "spin",
+    layer: "front"
+  },
+
+  {
+    emoji: "💕",
+    x: 63,
+    y: 94,
+    size: 48,
+    move: "pulse",
+    layer: "front"
+  },
+
+  {
+    emoji: "🎀",
+    x: 74,
+    y: 88,
+    size: 52,
+    move: "flip",
+    layer: "front"
+  }
+
 ];
 
 
 /* =========================================================
-   HOW MANY CREATURES APPEAR
-
-   Increase this number for more chaos.
-   ========================================================= */
-
-const creatureCount = 20;
-
-
-/* =========================================================
-   FIND IMPORTANT PAGE ELEMENTS
+   FIND THE IMPORTANT HTML ELEMENTS
    ========================================================= */
 
 const receipt =
@@ -54,10 +262,7 @@ const frontLayer =
 
 
 /* =========================================================
-   ACCESSIBILITY
-
-   If someone has reduced-motion enabled,
-   do not run the animation.
+   REDUCED MOTION CHECK
    ========================================================= */
 
 const prefersReducedMotion =
@@ -67,7 +272,7 @@ const prefersReducedMotion =
 
 
 /* =========================================================
-   START THE CHAOS
+   START
    ========================================================= */
 
 if (
@@ -79,7 +284,7 @@ if (
 
   setTimeout(() => {
 
-    releaseCreatures();
+    releaseChaos();
 
   }, 450);
 
@@ -87,14 +292,14 @@ if (
 
 
 /* =========================================================
-   RELEASE CREATURES
+   RELEASE ALL CREATURES
 
-   They begin in the centre of the receipt,
-   fly outward once,
-   then stay around it permanently.
+   Every creature begins in the centre of the receipt.
+
+   They burst outward ONCE toward their assigned position.
    ========================================================= */
 
-function releaseCreatures() {
+function releaseChaos() {
 
   const receiptBox =
     receipt.getBoundingClientRect();
@@ -110,20 +315,39 @@ function releaseCreatures() {
     receiptBox.height / 2;
 
 
-  for (
-    let i = 0;
-    i < creatureCount;
-    i++
-  ) {
+  /* =======================================================
+     MOBILE
 
-    createCreature(
-      i,
-      startX,
-      startY,
-      receiptBox
-    );
+     On smaller screens we use every second creature,
+     otherwise the screen becomes overcrowded.
+     ======================================================= */
 
-  }
+  const isMobile =
+    window.innerWidth < 700;
+
+
+  const itemsToUse =
+    isMobile
+      ? chaosItems.filter(
+          (item, index) =>
+            index % 2 === 0
+        )
+      : chaosItems;
+
+
+  itemsToUse.forEach(
+    (item, index) => {
+
+      createCreature(
+        item,
+        index,
+        startX,
+        startY,
+        isMobile
+      );
+
+    }
+  );
 
 }
 
@@ -133,10 +357,11 @@ function releaseCreatures() {
    ========================================================= */
 
 function createCreature(
+  item,
   index,
   startX,
   startY,
-  receiptBox
+  isMobile
 ) {
 
   const creature =
@@ -148,20 +373,15 @@ function createCreature(
 
 
   creature.textContent =
-    randomCharacter();
+    item.emoji;
 
 
-  /* =====================================================
-     FRONT OR BACK
-
-     Some creatures appear behind the page.
-     Others appear in front of normal page content.
-
-     The receipt itself stays above all of them.
-     ===================================================== */
+  /* =======================================================
+     CHOOSE FRONT OR BACK LAYER
+     ======================================================= */
 
   const layer =
-    Math.random() < 0.45
+    item.layer === "behind"
       ? behindLayer
       : frontLayer;
 
@@ -169,17 +389,35 @@ function createCreature(
   layer.appendChild(creature);
 
 
-  /* =====================================================
-     RANDOM CREATURE SIZE
-     ===================================================== */
+  /* =======================================================
+     BACKGROUND CREATURES ARE SOFTER
+     ======================================================= */
+
+  const settledOpacity =
+    item.layer === "behind"
+      ? 0.18
+      : 1;
+
+
+  /* =======================================================
+     SIZE
+
+     Slightly smaller on phones.
+     ======================================================= */
+
+  const finalSize =
+    isMobile
+      ? item.size * 0.72
+      : item.size;
+
 
   creature.style.fontSize =
-    `${randomNumber(28, 62)}px`;
+    `${finalSize}px`;
 
 
-  /* =====================================================
-     START INSIDE ORDER SUMMARY
-     ===================================================== */
+  /* =======================================================
+     START INSIDE THE RECEIPT
+     ======================================================= */
 
   creature.style.left =
     `${startX}px`;
@@ -188,50 +426,83 @@ function createCreature(
     `${startY}px`;
 
 
-  /* =====================================================
-     FIND A FIXED DESTINATION
+  creature.style.opacity = 0;
 
-     Creatures are distributed around the receipt,
-     rather than directly on top of it.
-     ===================================================== */
 
-  const destination =
-    getPositionAroundReceipt(
-      index,
-      receiptBox
-    );
+  /* =======================================================
+     DESTINATION
+
+     Converts our percentage coordinates into actual
+     screen positions.
+     ======================================================= */
+
+  const destinationX =
+    window.innerWidth *
+    (item.x / 100);
+
+
+  const destinationY =
+    window.innerHeight *
+    (item.y / 100);
 
 
   const moveX =
-    destination.x -
+    destinationX -
     startX;
 
 
   const moveY =
-    destination.y -
+    destinationY -
     startY;
 
 
-  /* =====================================================
-     OPENING EXPLOSION
+  /* =======================================================
+     SMALL OVERSHOOT
 
-     Creature flies outward ONCE.
-     ===================================================== */
+     Makes the opening movement feel like a proper burst
+     instead of a boring straight slide.
+     ======================================================= */
 
-  const openingAnimation =
+  const overshootX =
+    moveX * 1.08;
+
+
+  const overshootY =
+    moveY * 1.08;
+
+
+  /* =======================================================
+     OPENING BURST
+
+     This happens ONCE.
+     ======================================================= */
+
+  const burst =
     creature.animate(
 
       [
         {
           transform:
-            "translate(-50%, -50%) scale(0.2) rotate(0deg)",
+            "translate(-50%, -50%) scale(0.15) rotate(0deg)",
 
           opacity: 0
         },
 
         {
-          opacity: 1,
-          offset: 0.12
+          transform:
+            `translate(-50%, -50%)
+             translate(
+               ${overshootX}px,
+               ${overshootY}px
+             )
+             scale(1.12)
+             rotate(
+               ${randomNumber(-420, 420)}deg
+             )`,
+
+          opacity: settledOpacity,
+
+          offset: 0.82
         },
 
         {
@@ -243,22 +514,25 @@ function createCreature(
              )
              scale(1)
              rotate(
-               ${randomNumber(-540, 540)}deg
+               ${randomNumber(-50, 50)}deg
              )`,
 
-          opacity: 1
+          opacity: settledOpacity
         }
       ],
 
       {
         duration:
           randomNumber(
-            1400,
-            2400
+            1250,
+            2100
           ),
 
+        delay:
+          index * 18,
+
         easing:
-          "cubic-bezier(.15,.75,.25,1)",
+          "cubic-bezier(.18,.76,.25,1)",
 
         fill:
           "forwards"
@@ -267,27 +541,38 @@ function createCreature(
     );
 
 
-  /* =====================================================
-     AFTER THE EXPLOSION
+  /* =======================================================
+     AFTER THE BURST
 
-     Move the creature permanently to its destination,
-     then start its little in-place animation.
-     ===================================================== */
+     Permanently move the creature to its final position.
 
-  openingAnimation.finished.then(() => {
+     It will NEVER travel around the screen again.
+     ======================================================= */
+
+  burst.finished.then(() => {
+
+    burst.cancel();
+
 
     creature.style.left =
-      `${destination.x}px`;
+      `${destinationX}px`;
+
 
     creature.style.top =
-      `${destination.y}px`;
+      `${destinationY}px`;
+
+
+    creature.style.opacity =
+      settledOpacity;
+
 
     creature.style.transform =
       "translate(-50%, -50%)";
 
 
-    startIdleAnimation(
-      creature
+    startIdleMovement(
+      creature,
+      item.move
     );
 
   });
@@ -296,169 +581,449 @@ function createCreature(
 
 
 /* =========================================================
-   POSITIONS AROUND THE RECEIPT
+   IDLE MOVEMENT
 
-   Creatures form a loose ring around the Order Summary.
+   The creature remains in ONE fixed location.
 
-   They are deliberately pushed OUTSIDE the receipt area
-   so the receipt stays readable.
+   Only its local movement changes.
    ========================================================= */
 
-function getPositionAroundReceipt(
-  index,
-  receiptBox
+function startIdleMovement(
+  creature,
+  movement
 ) {
 
-  const angle =
-    (
-      index /
-      creatureCount
-    ) *
-    Math.PI *
-    2;
+  let frames;
+
+  let duration;
+
+  let easing =
+    "ease-in-out";
 
 
-  /* Horizontal distance from receipt */
+  /* =======================================================
+     HOVER
+     ======================================================= */
 
-  const radiusX =
-    receiptBox.width / 2 +
-    randomNumber(
-      70,
-      180
-    );
+  if (movement === "hover") {
 
+    frames = [
 
-  /* Vertical distance from receipt */
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) rotate(-3deg)"
+      },
 
-  const radiusY =
-    receiptBox.height / 2 +
-    randomNumber(
-      50,
-      140
-    );
+      {
+        transform:
+          "translate(-50%, -50%) translateY(-11px) rotate(4deg)"
+      },
 
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) rotate(-3deg)"
+      }
 
-  let x =
-    receiptBox.left +
-    receiptBox.width / 2 +
-    Math.cos(angle) *
-    radiusX;
+    ];
 
+    duration =
+      randomNumber(
+        3000,
+        4500
+      );
 
-  let y =
-    receiptBox.top +
-    receiptBox.height / 2 +
-    Math.sin(angle) *
-    radiusY;
-
-
-  /* =====================================================
-     KEEP THEM INSIDE THE SCREEN
-     ===================================================== */
-
-  x =
-    Math.max(
-      30,
-      Math.min(
-        window.innerWidth - 30,
-        x
-      )
-    );
+  }
 
 
-  y =
-    Math.max(
-      30,
-      Math.min(
-        window.innerHeight - 30,
-        y
-      )
-    );
+  /* =======================================================
+     FLOAT
+     ======================================================= */
+
+  else if (movement === "float") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) translate(0, 0)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translate(7px, -9px)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translate(-5px, -3px)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translate(0, 0)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        5000,
+        7000
+      );
+
+  }
 
 
-  return {
-    x,
-    y
-  };
+  /* =======================================================
+     SPIN CLOCKWISE
+     ======================================================= */
 
-}
+  else if (movement === "spin") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(0deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(360deg)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        5500,
+        8500
+      );
+
+    easing =
+      "linear";
+
+  }
 
 
-/* =========================================================
-   IDLE ANIMATION
+  /* =======================================================
+     SPIN ANTICLOCKWISE
+     ======================================================= */
 
-   After settling, each creature stays in its own place
-   and gently spins / bobs / wiggles forever.
-   ========================================================= */
+  else if (movement === "spin-reverse") {
 
-function startIdleAnimation(
-  creature
-) {
+    frames = [
 
-  const bobAmount =
-    randomNumber(
-      5,
-      16
-    );
+      {
+        transform:
+          "translate(-50%, -50%) rotate(0deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-360deg)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        5000,
+        8000
+      );
+
+    easing =
+      "linear";
+
+  }
 
 
-  const rotationAmount =
-    randomNumber(
-      12,
-      45
-    );
+  /* =======================================================
+     WIGGLE
+     ======================================================= */
+
+  else if (movement === "wiggle") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(0deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-11deg) translateX(-4px)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(9deg) translateX(4px)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-5deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(0deg)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        2300,
+        3400
+      );
+
+  }
 
 
-  const direction =
-    Math.random() < 0.5
-      ? -1
-      : 1;
+  /* =======================================================
+     FLIP
+     ======================================================= */
 
+  else if (movement === "flip") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) rotateY(0deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotateY(180deg) scale(1.08)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotateY(360deg)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        4200,
+        6500
+      );
+
+  }
+
+
+  /* =======================================================
+     BOUNCE
+     ======================================================= */
+
+  else if (movement === "bounce") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) scaleY(1)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(-13px) scaleY(1.04)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) scaleY(0.95)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0) scaleY(1)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        2400,
+        3500
+      );
+
+  }
+
+
+  /* =======================================================
+     SWAY
+     ======================================================= */
+
+  else if (movement === "sway") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-9deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(9deg)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-9deg)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        3200,
+        4800
+      );
+
+  }
+
+
+  /* =======================================================
+     PULSE
+     ======================================================= */
+
+  else if (movement === "pulse") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) scale(1)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) scale(1.14)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) scale(1)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        2200,
+        3400
+      );
+
+  }
+
+
+  /* =======================================================
+     BUTTERFLY FLUTTER
+     ======================================================= */
+
+  else if (movement === "flutter") {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-4deg) scaleX(1)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(5deg) scaleX(0.82)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-3deg) scaleX(1)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(4deg) scaleX(0.88)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) rotate(-4deg) scaleX(1)"
+      }
+
+    ];
+
+    duration =
+      randomNumber(
+        1500,
+        2300
+      );
+
+  }
+
+
+  /* =======================================================
+     FALLBACK
+
+     If a movement name is ever mistyped,
+     the creature simply hovers.
+     ======================================================= */
+
+  else {
+
+    frames = [
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(-8px)"
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) translateY(0)"
+      }
+
+    ];
+
+    duration =
+      3500;
+
+  }
+
+
+  /* =======================================================
+     RUN IDLE MOVEMENT FOREVER
+
+     Random delay prevents everything moving in sync.
+     ======================================================= */
 
   creature.animate(
 
-    [
-      {
-        transform:
-          "translate(-50%, -50%) translateY(0) rotate(0deg)"
-      },
-
-      {
-        transform:
-          `translate(-50%, -50%)
-           translateY(-${bobAmount}px)
-           rotate(
-             ${rotationAmount * direction}deg
-           )`
-      },
-
-      {
-        transform:
-          `translate(-50%, -50%)
-           translateY(${bobAmount / 2}px)
-           rotate(
-             ${-rotationAmount * direction}deg
-           )`
-      },
-
-      {
-        transform:
-          "translate(-50%, -50%) translateY(0) rotate(0deg)"
-      }
-    ],
+    frames,
 
     {
-      duration:
+      duration: duration,
+
+      delay:
         randomNumber(
-          2600,
-          5200
+          0,
+          1800
         ),
 
       iterations:
         Infinity,
 
-      easing:
-        "ease-in-out"
+      easing: easing
     }
 
   );
@@ -467,23 +1032,7 @@ function startIdleAnimation(
 
 
 /* =========================================================
-   RANDOM CHARACTER
-   ========================================================= */
-
-function randomCharacter() {
-
-  return chaosCharacters[
-    Math.floor(
-      Math.random() *
-      chaosCharacters.length
-    )
-  ];
-
-}
-
-
-/* =========================================================
-   RANDOM NUMBER
+   RANDOM NUMBER HELPER
    ========================================================= */
 
 function randomNumber(
