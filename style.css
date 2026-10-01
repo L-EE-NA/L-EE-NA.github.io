@@ -1111,8 +1111,6 @@ main > p > a:hover,
 .cult-free-container {
   position: relative;
 
-  z-index: 10;
-
   width: 88%;
   max-width: 760px;
 
@@ -1346,6 +1344,35 @@ main > p > a:hover,
 
 .cult-chaos-front {
   z-index: 30;
+}
+
+
+/* =========================================================
+   C.U.L.T. PAGE CONTENT LAYERS
+
+   Normal page content sits above the BACK chaos,
+   but below the FRONT chaos.
+
+   The Order Summary is protected and always stays
+   above every flying creature so it remains readable.
+   ========================================================= */
+
+.cult-free-container > * {
+  position: relative;
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   PROTECTED ORDER SUMMARY
+
+   Keeps unicorns, hamsters and other flying nonsense
+   from covering the receipt itself.
+   ========================================================= */
+
+.cult-receipt {
+  z-index: 40;
 }
 
 /* =========================================================
