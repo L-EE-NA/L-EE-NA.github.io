@@ -1304,44 +1304,133 @@ main > p > a:hover,
    ========================================================= */
 
 .cult-pay-button {
-  background-color: #9f657e;
+  background-color: #3f2d36;
 }
 
 
 .cult-pay-button:hover {
   background-color: #8d5670;
-
-  animation: cult-pay-tantrum 0.7s ease;
 }
 
-@keyframes cult-pay-tantrum {
+
+/* =========================================================
+   "NO. I WANNA PAY." PHYSICAL BREAKDOWN
+
+   JavaScript adds .is-panicking.
+
+   recoil -> squash -> jump -> spin -> escape ->
+   yanked back -> slam -> bounce -> dazed -> normal
+   ========================================================= */
+
+.cult-pay-button.is-panicking {
+  animation:
+    cult-pay-breakdown
+    1.65s
+    cubic-bezier(.36, .07, .19, .97)
+    both;
+}
+
+
+@keyframes cult-pay-breakdown {
 
   0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+    transform:
+      translate(0, 0)
+      rotate(0deg)
+      scale(1);
   }
 
-  15% {
-    transform: translate(-8px, 0) rotate(-4deg) scale(1.03);
+  7% {
+    transform:
+      translate(-10px, 0)
+      rotate(-3deg)
+      scale(1.03);
   }
 
-  30% {
-    transform: translate(9px, -4px) rotate(5deg) scale(1.04);
+  14% {
+    transform:
+      translate(-6px, 5px)
+      rotate(2deg)
+      scaleX(1.18)
+      scaleY(0.72);
   }
 
-  45% {
-    transform: translate(-6px, -8px) rotate(-3deg) scale(1.05);
+  24% {
+    transform:
+      translate(0, -38px)
+      rotate(120deg)
+      scale(1.04);
   }
 
-  60% {
-    transform: translate(6px, 0) rotate(3deg) scale(1.03);
+  36% {
+    transform:
+      translate(0, -32px)
+      rotate(360deg)
+      scale(1.02);
+  }
+
+  48% {
+    transform:
+      translate(
+        var(--panic-escape-x),
+        -8px
+      )
+      rotate(390deg)
+      scale(1.05);
+  }
+
+  58% {
+    transform:
+      translate(
+        var(--panic-yank-x),
+        0
+      )
+      rotate(345deg)
+      scale(0.97);
+  }
+
+  67% {
+    transform:
+      translate(0, 11px)
+      rotate(360deg)
+      scaleX(1.16)
+      scaleY(0.76);
   }
 
   75% {
-    transform: translate(-3px, -3px) rotate(-2deg) scale(1.02);
+    transform:
+      translate(0, -17px)
+      rotate(358deg)
+      scale(1.03);
+  }
+
+  82% {
+    transform:
+      translate(0, 3px)
+      rotate(362deg)
+      scaleX(1.08)
+      scaleY(0.92);
+  }
+
+  88% {
+    transform:
+      translate(0, -7px)
+      rotate(359deg)
+      scale(1.01);
+  }
+
+  94% {
+    transform:
+      translate(0, 0)
+      rotate(5deg)
+      scale(1);
   }
 
   100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+    transform:
+      translate(0, 0)
+      rotate(0deg)
+      scale(1);
   }
 
 }
