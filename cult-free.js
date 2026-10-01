@@ -88,6 +88,19 @@ const prefersReducedMotion =
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
+/* =========================================================
+   MOBILE CHAOS MODE
+
+   On screens 700px wide or smaller, the emojis will
+   scatter across the screen temporarily and then fade away.
+
+   Desktop keeps the permanent chaos.
+   ========================================================= */
+
+const mobileChaos =
+  window.matchMedia(
+    "(max-width: 700px)"
+  ).matches;
 
 /* =========================================================
    START THE CHAOS
@@ -377,30 +390,96 @@ const landing =
 
   burst.finished.then(() => {
 
-    burst.cancel();
+  burst.cancel();
 
 
-    particle.style.left =
-      `${landing.x}px`;
+  particle.style.left =
+    `${landing.x}px`;
 
 
-    particle.style.top =
-      `${landing.y}px`;
+  particle.style.top =
+    `${landing.y}px`;
 
 
-    particle.style.opacity =
-      finalOpacity;
+  particle.style.opacity =
+    finalOpacity;
 
 
-    particle.style.transform =
-      "translate(-50%, -50%)";
+  particle.style.transform =
+    "translate(-50%, -50%)";
 
 
-    startIdleMovement(
-      particle
-    );
+  /* =======================================================
+     MOBILE
 
-  });
+     Let the emoji sit where it landed for a moment,
+     then fade it completely away and remove it.
+
+     This means the explosion can cover the screen
+     temporarily without making the page unreadable.
+     ======================================================= */
+
+  if (
+    mobileChaos
+  ) {
+
+    setTimeout(() => {
+
+      const fade =
+        particle.animate(
+
+          [
+            {
+              opacity:
+                finalOpacity
+            },
+
+            {
+              opacity:
+                0
+            }
+          ],
+
+          {
+            duration:
+              900,
+
+            easing:
+              "ease-out",
+
+            fill:
+              "forwards"
+          }
+
+        );
+
+
+      fade.finished.then(() => {
+
+        particle.remove();
+
+      });
+
+    }, 350);
+
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     DESKTOP
+
+     Desktop emojis stay where they landed forever
+     and continue doing their little idle movements.
+     ======================================================= */
+
+  startIdleMovement(
+    particle
+  );
+
+});
 
 }
 
@@ -422,6 +501,46 @@ function getLandingPosition(
   receiptBox,
   size
 ) {
+
+     /* =======================================================
+     MOBILE LANDING
+
+     Phones do NOT search for safe empty spaces.
+
+     The emojis are temporary on mobile, so they are
+     allowed to scatter across the entire visible screen,
+     including briefly over text and the receipt.
+
+     They will fade away afterwards.
+     ======================================================= */
+
+  if (
+    mobileChaos
+  ) {
+
+    const mobileScreenEdge =
+      size / 2 + 12;
+
+
+    return {
+
+      x:
+        randomNumber(
+          mobileScreenEdge,
+          window.innerWidth -
+          mobileScreenEdge
+        ),
+
+      y:
+        randomNumber(
+          mobileScreenEdge,
+          window.innerHeight -
+          mobileScreenEdge
+        )
+
+    };
+
+  }
 
   /* =======================================================
      FORBIDDEN LANDING AREAS
