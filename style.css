@@ -1279,6 +1279,42 @@ main > p > a:hover,
   transform: translateY(-3px) rotate(-1deg);
 }
 
+/* =========================================================
+   C.U.L.T. CHOICE BUTTON ROW
+
+   Keeps the two choices beside each other on larger screens.
+   ========================================================= */
+
+.cult-choice-buttons {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 16px;
+
+  flex-wrap: wrap;
+
+  margin-top: 5px;
+}
+
+
+/* =========================================================
+   "NO. I WANNA PAY." BUTTON
+
+   Slightly lighter so the two choices are visually distinct.
+   ========================================================= */
+
+.cult-pay-button {
+  background-color: #9f657e;
+}
+
+
+.cult-pay-button:hover {
+  background-color: #b77794;
+
+  transform: translateY(-3px) rotate(1deg);
+}
 
 /* =========================================================
    LITTLE WARNING UNDER BUTTON
