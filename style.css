@@ -1401,54 +1401,7 @@ main > p > a:hover,
 }
 
 
-/* =========================================================
-   EXPLOSION PARTICLES
-   Burst outward from the Order Summary box.
-   ========================================================= */
 
-.cult-chaos-burst {
-  animation:
-    cult-chaos-explode
-    var(--chaos-duration)
-    cubic-bezier(.15, .7, .25, 1)
-    forwards;
-}
-
-
-@keyframes cult-chaos-explode {
-
-  0% {
-    transform:
-      translate(-50%, -50%)
-      translate(0, 0)
-      rotate(0deg)
-      scale(0.25);
-
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  75% {
-    opacity: 1;
-  }
-
-  100% {
-    transform:
-      translate(-50%, -50%)
-      translate(
-        var(--chaos-x),
-        var(--chaos-y)
-      )
-      rotate(var(--chaos-rotation))
-      scale(var(--chaos-scale));
-
-    opacity: 0;
-  }
-
-}
 
 
 /* =========================================================
