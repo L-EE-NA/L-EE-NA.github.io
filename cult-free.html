@@ -24,18 +24,24 @@
 
 
   <!-- =========================================================
-       FLOATING CHAOS
-       Decorative unicorns and hamsters.
-       CSS makes these move around the page.
+       C.U.L.T. CHAOS LAYERS
+       JavaScript fills these layers with flying creatures.
+
+       BEHIND = creatures can appear behind the page content.
+       FRONT  = creatures can fly directly across the page.
        ========================================================= -->
 
-  <div class="cult-chaos cult-chaos-one">🦄</div>
+  <div
+    class="cult-chaos-layer cult-chaos-behind"
+    id="cult-chaos-behind"
+    aria-hidden="true"
+  ></div>
 
-  <div class="cult-chaos cult-chaos-two">🐹</div>
-
-  <div class="cult-chaos cult-chaos-three">✨</div>
-
-  <div class="cult-chaos cult-chaos-four">🌈</div>
+  <div
+    class="cult-chaos-layer cult-chaos-front"
+    id="cult-chaos-front"
+    aria-hidden="true"
+  ></div>
 
 
   <!-- =========================================================
@@ -143,6 +149,14 @@
   </main>
 
 
+    <!-- =========================================================
+       C.U.L.T. CHAOS JAVASCRIPT
+       Controls the exploding / flying unicorns, hamsters,
+       rainbows and sparkles on this joke page only.
+       ========================================================= -->
+
+  <script src="cult-free.js"></script>
+  
 </body>
 
 </html>
