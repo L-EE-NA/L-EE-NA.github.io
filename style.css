@@ -1127,7 +1127,7 @@ main > p > a:hover,
    ========================================================= */
 
 .cult-free-label {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 
   font-family: Arial, Helvetica, sans-serif;
 
@@ -1145,7 +1145,7 @@ main > p > a:hover,
    ========================================================= */
 
 .cult-free-title {
-  margin: 40 auto 25px auto;
+  margin: 0.67em auto 25px auto;
 
   max-width: 700px;
 
