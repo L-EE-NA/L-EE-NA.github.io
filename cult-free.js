@@ -194,7 +194,9 @@ function createParticle(
      ======================================================= */
 
   const isBehind =
-    Math.random() < 0.22;
+  mobileChaos
+    ? false
+    : Math.random() < 0.22;
 
 
   const layer =
