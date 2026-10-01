@@ -423,45 +423,61 @@ const landing =
     mobileChaos
   ) {
 
-    setTimeout(() => {
+   /* Each emoji hangs around for a different amount of time
+   so they disappear gradually instead of all together. */
 
-      const fade =
-        particle.animate(
-
-          [
-            {
-              opacity:
-                finalOpacity
-            },
-
-            {
-              opacity:
-                0
-            }
-          ],
-
-          {
-            duration:
-              900,
-
-            easing:
-              "ease-out",
-
-            fill:
-              "forwards"
-          }
-
-        );
+const lingerDuration =
+  randomNumber(
+    900,
+    2200
+  );
 
 
-      fade.finished.then(() => {
+const fadeDuration =
+  randomNumber(
+    900,
+    1500
+  );
 
-        particle.remove();
 
-      });
+setTimeout(() => {
 
-    }, 350);
+  const fade =
+    particle.animate(
 
+      [
+        {
+          opacity:
+            finalOpacity
+        },
+
+        {
+          opacity:
+            0
+        }
+      ],
+
+      {
+        duration:
+          fadeDuration,
+
+        easing:
+          "ease-out",
+
+        fill:
+          "forwards"
+      }
+
+    );
+
+
+  fade.finished.then(() => {
+
+    particle.remove();
+
+  });
+
+}, lingerDuration);
 
     return;
 
