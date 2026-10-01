@@ -1505,7 +1505,22 @@ main > p > a:hover,
   z-index: 30;
 }
 
+/* =========================================================
+   MOBILE CHAOS FOREGROUND
 
+   Mobile emojis are temporary, so they are allowed to
+   explode and land over EVERYTHING before fading away.
+
+   Desktop layering stays unchanged.
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .cult-chaos-front {
+    z-index: 60;
+  }
+
+}
 /* =========================================================
    C.U.L.T. PAGE CONTENT LAYERS
 
